@@ -6,6 +6,11 @@
 - `public/` — static assets and PWA files.
 - Tooling: `vite.config.ts`, `tsconfig.json`, `eslint.config.js`, `prettier.config.js`.
 
+## Main Spec
+- The canonical product spec lives at `spec/main_spec.md`.
+- Keep this spec updated when changing the data model, flows, or API surfaces.
+- Treat it as the source of truth for requirements and acceptance criteria.
+
 ## Build, Test, and Development Commands
 - `pnpm dev` — start Vite dev server on port 3000.
 - `pnpm build` — production build via Vite.
