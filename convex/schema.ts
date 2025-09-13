@@ -58,44 +58,9 @@ export default defineSchema({
     callSessionId: v.optional(v.id("callSessions")),
   })
     // For overlap checks and listing by doctor/time
-    .index("by_doctor_time", ["doctorId", "startTime"]) 
+    .index("by_doctor_time", ["doctorId", "startTime"])
     // For patient history queries
-    .index("by_patient_time", ["patientId", "startTime"]) 
+    .index("by_patient_time", ["patientId", "startTime"])
     // Filter by status over time windows
     .index("by_status_time", ["status", "startTime"]),
-
-  // Inbound voice call sessions (one per call)
-  callSessions: defineTable({
-    callerPhone: v.string(),
-    patientId: v.optional(v.id("patients")),
-    status: v.union(
-      v.literal("active"),
-      v.literal("ended"),
-      v.literal("abandoned")
-    ),
-    startedAt: v.number(),
-    endedAt: v.optional(v.number()),
-    providerSessionId: v.optional(v.string()),
-    lastIntent: v.optional(v.string()),
-    summary: v.optional(v.string()),
-  })
-    .index("by_status_startedAt", ["status", "startedAt"]) // recent active sessions
-    .index("by_callerPhone_startedAt", ["callerPhone", "startedAt"]), // phone history
-
-  // Messages within a call session (ASR transcripts, bot prompts, user utterances)
-  callMessages: defineTable({
-    sessionId: v.id("callSessions"),
-    role: v.union(
-      v.literal("system"),
-      v.literal("assistant"),
-      v.literal("user")
-    ),
-    text: v.string(),
-    audioId: v.optional(v.id("_storage")),
-  })
-    .index("by_session_creation", ["sessionId", "_creationTime"]) // ordered chat log
-    .searchIndex("search_text", {
-      searchField: "text",
-      filterFields: ["sessionId"],
-    }),
 });
