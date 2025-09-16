@@ -1,0 +1,27 @@
+{
+  "name": "@voice-scheduler-agent/backend",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./api": {
+      "types": "./convex/_generated/api.d.ts",
+      "import": "./convex/_generated/api.js"
+    },
+    "./dataModel": {
+      "types": "./convex/_generated/dataModel.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "convex dev",
+    "build": "convex codegen",
+    "format": "prettier",
+    "check": "prettier --write ."
+  },
+  "dependencies": {
+    "convex": "^1.19.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3",
+    "typescript": "^5.9.2"
+  }
+}

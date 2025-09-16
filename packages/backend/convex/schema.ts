@@ -55,7 +55,6 @@ export default defineSchema({
       v.literal("manual")
     ),
     notes: v.optional(v.string()),
-    callSessionId: v.optional(v.id("callSessions")),
   })
     // For overlap checks and listing by doctor/time
     .index("by_doctor_time", ["doctorId", "startTime"])

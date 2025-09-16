@@ -6,6 +6,7 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { TanstackDevtools } from "@tanstack/react-devtools";
+import { api } from "@voice-scheduler-agent/backend/api";
 
 import appCss from "../styles.css?url";
 

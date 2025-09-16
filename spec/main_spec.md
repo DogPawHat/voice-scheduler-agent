@@ -1,17 +1,14 @@
 # Voice Scheduler Agent
 
-This is a application that accepts voice calls and schedules appointments with a doctor.
+This is a application that accepts voice calls and schedules appointments with a doctor. The user will login and select a doctor to schedule an appointment. The app will then start a web voice call in the server and start a conversation with an AI agent that can assist the user in scheduling appointments. The AI agent will help the user schedule appointments and suggest available time slots based on the doctor's availability and the patient's preferences.
 
 **Data Model**
 - `doctors`: roster of providers (name, timezone, active).
 - `patients`: people identified primarily by phone.
 - `availabilityBlocks`: provider availability windows.
 - `appointments`: scheduled visits linking doctor + patient + time.
-- `callSessions`: one record per call with status and summary.
-- `callMessages`: transcript turns (user/assistant/system).
 
 **Core Flows**
-- Call lifecycle: start session → optional patient attach by phone → message stream → end with summary.
 - Scheduling: derive open slots from availability minus existing appointments → create/cancel/reschedule.
 - Patient: upsert/find by normalized phone (E.164), optional enrichment (name/email).
 
@@ -20,7 +17,6 @@ This is a application that accepts voice calls and schedules appointments with a
 - Doctors: list, get.
 - Availability: upsert, forDoctorInRange.
 - Appointments: findOpenSlots, create, cancel, reschedule, forDoctorOnDay, forPatient.
-- Call sessions: start, appendMessage, assignPatient, linkAppointment, end.
 
 **Rules**
 - Time stored in UTC ms; display in doctor’s timezone.
@@ -29,11 +25,11 @@ This is a application that accepts voice calls and schedules appointments with a
 
 **Acceptance**
 - Book/reschedule/cancel without conflicts.
-- Recognize returning callers via phone; book in one call.
-- Admin can view per‑doctor schedule and call transcripts.
-- Session transcripts are searchable per session.
+- Recognize returning patients via phone; book in one flow.
+- Admin can view per‑doctor schedule.
+- Voice integration details defined later; APIs support future integration.
 
 **Open Questions**
 - Default slot length and appointment durations?
 - Per‑doctor rules (telehealth, buffers)?
-- Provider/webhook details and retry behavior?
+- Voice provider/webhook details and retry behavior (for future integration)?
